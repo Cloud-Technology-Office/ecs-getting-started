@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  api:
+    image: ecs-api
+    ports:
+      - '8000:8000'
+    environment:
+      ECS_API_KEY: ${ECS_API_KEY}
+      REPOSITORY_ACCESS_TOKEN: ${REPOSITORY_ACCESS_TOKEN}
+      REPOSITORY_URL: ${REPOSITORY_URL}
+      SOPS_KMS_ARN: ${SOPS_KMS_ARN}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
