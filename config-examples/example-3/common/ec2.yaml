@@ -1,0 +1,9 @@
+ec2:
+  instance_type    : t2.medium
+  user_data        : null
+  ami              : ami-123456789
+  instance_profile : instance-profile-1
+  disk_size        : 200
+  vpc_name         : default
+  tags:
+    terraform : true
