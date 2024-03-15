@@ -1,5 +1,5 @@
 strategies:
-  merge_common_to_teams:
+  merge_common_ec2_to_teams_ec2:
     operations:
       - for_each:
           iterator: $directory_data
@@ -10,10 +10,10 @@ strategies:
             - add_parent: ec2
     variable_definitions:
       common:
-        path: ${config_path}/common/
+        path: ./common/
         type: data_with_key_from_object_field
         source_object_path: ec2
         destination_object_path: ''
       directory_data:
-        path: ${config_path}/teams/{team}/
+        path: ./teams/{team}/
         type: data_with_key_from_path

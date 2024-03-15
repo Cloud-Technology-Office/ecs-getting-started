@@ -1,0 +1,23 @@
+strategies:
+  generate_ec2s:
+    operations:
+      - for_each:
+          iterator: $team_data
+          actions:
+            - for_each:
+                iterator: $team_data.$each_key.ec2
+                actions:
+                  - inject:
+                      - $base
+                      - $each_value
+            - add_parent: ec2
+
+    variable_definitions:
+      base:
+        path: ./common/ec2.yaml
+        type: data_with_key_from_object_field
+        source_object_path: ec2
+        destination_object_path: ''
+      team_data:
+        path: ./teams/{team}
+        type: data_with_key_from_path
