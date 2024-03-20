@@ -2,13 +2,13 @@
 
 This repository contains the basics for getting started with ECS. 
 
-To find out more about ECS, click <a target="__new" href="https://cloudtechnologyoffice.com/enterprise-config-service">here</a>.
+To find out more about ECS, click <a target="_new" href="https://cloudtechnologyoffice.com/enterprise-config-service">here</a>.
 
-For the complete documentation click <a target="__new" href="https://doc.cloudtechnologyoffice.com/ecs">here</a>.
+For the complete documentation click <a target="_new" href="https://doc.cloudtechnologyoffice.com/ecs">here</a>.
 
 To use this repository effectively, refer to the ECS user guide sections:
 
-- <a target="__new" href="https://doc.cloudtechnologyoffice.com/ecs/installation/server/">Server Installation</a>
-- <a target="__new" href="https://doc.cloudtechnologyoffice.com/ecs/installation/cli">CLI Installation and Initilization</a>
-- <a target="__new" href="https://doc.cloudtechnologyoffice.com/ecs/config">Configuration Examples</a>
+- <a target="_new" href="https://doc.cloudtechnologyoffice.com/ecs/installation/server/">Server Installation</a>
+- <a target="_new" href="https://doc.cloudtechnologyoffice.com/ecs/installation/cli">CLI Installation and Initilization</a>
+- <a target="_new" href="https://doc.cloudtechnologyoffice.com/ecs/config">Configuration Examples</a>
 
