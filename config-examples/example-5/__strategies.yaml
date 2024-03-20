@@ -1,5 +1,5 @@
 strategies:
-  example:
+  generate_ec2s:
     # Generates a list of EC2s from contents of directories, with common_data merged in
     operations:
       - for_each:

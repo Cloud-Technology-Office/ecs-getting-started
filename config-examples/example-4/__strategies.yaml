@@ -1,5 +1,5 @@
 strategies:
-  example:
+  merge_common_objects_to_teams_objects:
     # merge listed objects to teams objects
     operations:
       - for_each:

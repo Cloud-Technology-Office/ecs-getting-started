@@ -1,7 +1,7 @@
 strategies:
-  example:
-    # Generates a list of EC2s and S3 buckets from contents of directories, with common_data merged in
-    # Add objects to the list_iterator
+  generate_listed_objects:
+    # Generates a list of EC2 server and S3 bucket configs from contents of directories, with common_data merged in
+    # Add objects to the list_iterator to work with more
     operations:
       - for_each:
           iterator: $directory_data

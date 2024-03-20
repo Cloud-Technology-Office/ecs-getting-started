@@ -1,3 +1,5 @@
+# This file has all the example strategies but note, it's defined at root level so the strategies can be accessed from any path
+# The path specified with --path is substituted into the variable specifications using ${config_path}
 strategies:
   # Example 3 strategy
   merge_common_ec2_to_teams_ec2:
