@@ -113,4 +113,19 @@ strategies:
         type: data_with_key_from_path
 ```
 
+As mentioned, now we would use filtering to obtain the data we need from the overall config.
 
+`cto ecs config build --path config-examples/example-6 --strategy-name generate_listed_objects --filter '"team-2".s3`
+
+```yaml
+{
+  "bucket-default": {
+    "private": true,
+    "encrypted": true
+  },
+  "bucket-private-false": {
+    "private": false,
+    "encrypted": true
+  }
+}
+```
