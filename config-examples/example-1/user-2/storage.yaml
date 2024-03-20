@@ -1,0 +1,8 @@
+s3:
+  user-2-bucket-a:
+    private: true
+    encrypted: true
+
+  user-2-bucket-b:
+    private: true
+    encrypted: true

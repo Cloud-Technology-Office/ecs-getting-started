@@ -1,5 +1,5 @@
 ec2:
-    ec2-1:
+    server-1:
         disk_size: 1400
-    ec2-2:
+    server-2:
         disk_size: 1800        
