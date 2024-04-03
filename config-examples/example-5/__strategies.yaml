@@ -1,0 +1,28 @@
+strategies:
+  generate_ec2s:
+    # Generates a list of EC2s from contents of directories, with common_data merged in
+    operations:
+      - for_each:
+          iterator: $directory_data
+          alias: directory_iterator
+          actions:
+            - for_each:
+                # The following 3 iterators work the same so use your syntax of choice
+                # iterator: $directory_data.$each_key.ec2
+                iterator: $each_value.ec2
+                # iterator: $directory_iterator#each_value.ec2
+                actions:
+                  - inject:
+                      - $common_data
+                      - $each_value
+            - add_parent: ec2
+
+    variable_definitions:
+      common_data:
+        path: ./common
+        type: data_with_key_from_object_field
+        source_object_path: ec2
+        destination_object_path: ''
+      directory_data:
+        path: ./teams/{team}
+        type: data_with_key_from_path

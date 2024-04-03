@@ -1,0 +1,22 @@
+strategies:
+  merge_common_objects_to_teams_objects:
+    # merge listed objects to teams objects
+    operations:
+      - for_each:
+          iterator: $directory_data
+          alias: directory_iterator
+          actions:
+            - for_each:
+                list_iterator: [ 'ec2', 's3' ]
+                actions:
+                  - inject:
+                      - $common_data.$each_value
+                      - $directory_iterator#each_value.$each_value
+                  - add_parent: $each_value
+    variable_definitions:
+      common_data:
+        path: ./common
+        type: data
+      directory_data:
+        path: ./teams/{team}
+        type: data_with_key_from_path

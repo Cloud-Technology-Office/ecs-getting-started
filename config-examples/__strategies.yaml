@@ -1,0 +1,110 @@
+# This file has all the example strategies but note, it's defined at root level so the strategies can be accessed from any path
+# The path specified with --path is substituted into the variable specifications using ${config_path}
+strategies:
+  # Example 3 strategy
+  merge_common_ec2_to_teams_ec2:
+    # merge common ec2 object to teams ec2 objects
+    operations:
+      - for_each:
+          iterator: $directory_data
+          actions:
+            - inject:
+              - $common_data
+              - $each_value.ec2
+            - add_parent: ec2
+    variable_definitions:
+      common_data:
+        path: ${config_path}/common/
+        type: data_with_key_from_object_field
+        source_object_path: ec2
+        destination_object_path: ''
+      directory_data:
+        path: ${config_path}/teams/{team}/
+        type: data_with_key_from_path
+
+  # Example 4 strategy
+  merge_common_objects_to_teams_objects:
+    # merge listed objects to teams objects
+    operations:
+      - for_each:
+          iterator: $directory_data
+          alias: directory_iterator
+          actions:
+            - for_each:
+                list_iterator: [ 'ec2', 's3' ]
+                actions:
+                  - inject:
+                      - $common_data.$each_value
+                      - $directory_iterator#each_value.$each_value
+                  - add_parent: $each_value
+    variable_definitions:
+      common_data:
+        path: ${config_path}/common
+        type: data
+      directory_data:
+        path: ${config_path}/teams/{team}
+        type: data_with_key_from_path
+
+  # Example 5 strategy
+  generate_ec2s:
+    # Generates a list of EC2s from contents of directories, with common_data merged in
+    operations:
+      - for_each:
+          iterator: $directory_data
+          alias: directory_iterator
+          actions:
+            - for_each:
+                # The following 3 iterators work the same so use your syntax of choice
+                # iterator: $directory_data.$each_key.ec2
+                iterator: $each_value.ec2
+                # iterator: $directory_iterator#each_value.ec2
+                actions:
+                  - inject:
+                      - $common_data
+                      - $each_value
+            - add_parent: ec2
+
+    variable_definitions:
+      common_data:
+        path: ${config_path}/common
+        type: data_with_key_from_object_field
+        source_object_path: ec2
+        destination_object_path: ''
+      directory_data:
+        path: ${config_path}/teams/{team}
+        type: data_with_key_from_path
+
+  # Example 6 strategy
+  generate_listed_objects:
+    # Generates a list of EC2 server and S3 bucket configs from contents of directories, with common_data merged in
+    # Add objects to the list_iterator to work with more
+    operations:
+      - for_each:
+          iterator: $directory_data
+          alias: directory_iterator
+          actions:
+            - for_each:
+                list_iterator: [ 'ec2', 's3' ]
+                alias: yaml_objects
+                actions:
+                  - for_each:
+                      # The following 2 iterators work the same so use your syntax of choice
+                      # iterator: $directory_iterator#each_value.$each_value
+                      iterator: $directory_iterator#each_value.$yaml_objects#each_value
+                      alias: instances
+                      actions:
+                        - inject:
+                            # Don't use alias iterator in same for_each loop
+                            - $common_data.$yaml_objects#each_value
+                            - $directory_iterator#each_value.$yaml_objects#each_value.$each_key
+                  # Either of these will work
+                  # - add_parent: $each_value
+                  - add_parent: $yaml_objects#each_value
+
+    variable_definitions:
+      common_data:
+        path: ${config_path}/common
+        type: data
+      directory_data:
+        path: ${config_path}/teams/{team}
+        type: data_with_key_from_path

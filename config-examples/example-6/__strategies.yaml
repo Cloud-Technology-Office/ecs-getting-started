@@ -1,0 +1,34 @@
+strategies:
+  generate_listed_objects:
+    # Generates a list of EC2 server and S3 bucket configs from contents of directories, with common_data merged in
+    # Add objects to the list_iterator to work with more
+    operations:
+      - for_each:
+          iterator: $directory_data
+          alias: directory_iterator
+          actions:
+            - for_each:
+                list_iterator: [ 'ec2', 's3' ]
+                alias: yaml_objects
+                actions:
+                  - for_each:
+                      # The following 2 iterators work the same so use your syntax of choice
+                      # iterator: $directory_iterator#each_value.$each_value
+                      iterator: $directory_iterator#each_value.$yaml_objects#each_value
+                      alias: instances
+                      actions:
+                        - inject:
+                            # Don't use alias iterator in same for_each loop
+                            - $common_data.$yaml_objects#each_value
+                            - $directory_iterator#each_value.$yaml_objects#each_value.$each_key
+                  # Either of these will work
+                  # - add_parent: $each_value
+                  - add_parent: $yaml_objects#each_value
+
+    variable_definitions:
+      common_data:
+        path: ./common
+        type: data
+      directory_data:
+        path: ./teams/{team}
+        type: data_with_key_from_path

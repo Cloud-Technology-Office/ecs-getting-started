@@ -1,0 +1,8 @@
+ec2:
+    server-1:
+        disk_size: 400
+    server-2:
+        disk_size: 800     
+
+s3:
+    bucket-123: {}

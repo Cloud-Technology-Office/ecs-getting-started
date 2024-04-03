@@ -1,0 +1,18 @@
+ec2:
+  instance_type    : t2.medium
+  user_data        : null
+  ami              : ami-1234567890
+  instance_profile : instance-profile-1
+  disk_size        : 200
+  vpc_name         : default
+  tags:
+    terraform : true
+
+# ec2-select-type:
+#     standard:
+#         instance_type: t3.large
+#         disk_size: 1000
+#     developer:
+#         instance_type: c5.2xlarge
+#         disk_size: 3000
+

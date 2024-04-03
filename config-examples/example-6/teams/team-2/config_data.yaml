@@ -1,0 +1,10 @@
+ec2:
+    server-1:
+        disk_size: 1400
+    server-2:
+        disk_size: 1800        
+
+s3:
+    bucket-default: {}    
+    bucket-private-false: 
+        private: false
