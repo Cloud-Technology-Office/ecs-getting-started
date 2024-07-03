@@ -6,24 +6,40 @@ services:
     ports:
       - '8000:8000'
     environment:
-      ACCEPT_EULA: ${ACCEPT_EULA}
-      ECS_API_KEY: ${ECS_API_KEY}
-      REPOSITORY_ACCESS_TOKEN: ${REPOSITORY_ACCESS_TOKEN}
-      REPOSITORY_URL: ${REPOSITORY_URL}
-      REPOSITORY_PROVIDER: ${REPOSITORY_PROVIDER}
+      ACCEPT_EULA: Y
 
-      # Uncomment if AWS is in use
-      SOPS_KMS_ARN: ${SOPS_KMS_ARN}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+      ECS_API_KEY: "<The API key you have been issued when you signed up for ECS>"
 
-      # Uncomment if Azure is in use
-#      SOPS_AZURE_KV: ${SOPS_AZURE_KV}
-#      AZURE_TENANT_ID: ${AZURE_TENANT_ID}
-#      AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
-#      AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      REPOSITORY_REPO1_URL: "<Empty configuration repository URL>"
+      REPOSITORY_REPO1_PROVIDER: "<github|bitbucket|gitlab|azure>"
+      REPOSITORY_REPO1_ACCESS_TOKEN: "<Token with read/write access an empty Git repo that will be used for config storage>"
 
-      # Uncomment if GCP is in use
-#      SOPS_GCP_KMS: ${SOPS_GCP_KMS}
-#      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
+      # ENCRYPTION KEY SPECIFICATION AND CREDENTIALS
+
+      # If using AWS KMS, set the following variables
+
+      # REPOSITORY_REPO1_SOPS_KMS_ARN: "<AWS KMS key ARN>"
+
+      # AWS_ACCESS_KEY_ID: "<AWS_ACCESS_KEY_ID>"
+      # AWS_SECRET_ACCESS_KEY: "<AWS_SECRET_ACCESS_KEY>"
+      # AWS_SESSION_TOKEN: "<AWS_SESSION_TOKEN>"
+      # or 
+      # if container running in AWS with role that can access KMS key, no vars required
+
+
+      # If using Azure Vault, set the follow variables
+
+      # REPOSITORY_REPO1_SOPS_AZURE_KV: <Key URL. i.e. https://<Vault name>.vault.azure.net/keys/<key name>/<string>
+
+      # AZURE_TENANT_ID: <tenant ID for the Service Principle>
+      # AZURE_CLIENT_ID: <appId for the Service Principle>
+      # AZURE_CLIENT_SECRET: <password for the Service Principle>
+
+
+      # If you are using GCP Vault, set the following variable
+
+      # REPOSITORY_REPO1_SOPS_GCP_KMS: projects/<project>/locations/global/keyRings/<keyring>/cryptoKeys/<key name>
+
+      # GOOGLE_APPLICATION_CREDENTIALS: "${VOLUME_MAPPED_DIR}/<MyGoogleServiceAccountJsonFile.json>"
+      # or 
+      # GOOGLE_CREDENTIALS: "<String encoded JSON Google credentials file"
