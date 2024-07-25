@@ -317,8 +317,8 @@ In this example, there are 2 user personas:
 
   - Core infra team
   
-  This team manages everything in the `/infra` directory structure. They are responsible for all account pipelines. This team might be the overall admins of the ECS platform or if they are not, they can be setup as ECS users rather than admins so they can be restricted to only managing config under `/infra` and can't see `/teams` data.
+    This team manages everything in the `/infra` directory structure. They are responsible for all account pipelines. This team might be the overall admins of the ECS platform or if they are not, they can be setup as ECS users rather than admins so they can be restricted to only managing config under `/infra` and can't see `/teams` data.
 
   - Non core infra team, i.e. application teams, devops, SRE etc
 
-  Team-a has access to everything in `/teams/team-a` directory, and also has read-only access to the `/infra/teams/team-a` directory so they can read the teams centrally managed tags. Team-b has access to their respective team area. 
+    Team-a has access to everything in `/teams/team-a` directory, and also has read-only access to the `/infra/teams/team-a` directory so they can read the teams centrally managed tags. Team-b has access to their respective team area. 
