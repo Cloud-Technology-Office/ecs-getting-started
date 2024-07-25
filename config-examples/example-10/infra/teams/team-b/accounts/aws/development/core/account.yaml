@@ -1,0 +1,18 @@
+account:
+  account_details:
+    account_email: team-b-development@cto.com
+    account_name: Team B - Development
+    organization_unit: development
+    environment: development
+
+
+  enabled_modules:
+    vpc:
+      us-east-1: true
+      us-east-2: true
+    postgres: 
+      us-east-1: true
+    kms: 
+      us-east-1: true
+
+    delete_default_vpc: false

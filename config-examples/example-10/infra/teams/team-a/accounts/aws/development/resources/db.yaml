@@ -1,0 +1,8 @@
+postgres:
+  us-east-1:
+    db-instance-team-a-account-1:
+      instance_class: db.t3.medium
+  us-east-2:
+    db-instance-team-a-account-1-east-2:
+      instance_class: db.t3.medium
+

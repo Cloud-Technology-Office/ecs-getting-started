@@ -1,0 +1,10 @@
+ec2:
+  us-east-1:
+    web-server-1-development:
+      vpc_name: vpc-development
+      tags:
+          env: development
+    web-server-2-development:
+      vpc_name: vpc-development
+      tags:
+          env: development

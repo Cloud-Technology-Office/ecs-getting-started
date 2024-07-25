@@ -1,0 +1,45 @@
+# In this example, the team wants to manage their own strategy
+strategies: 
+  regional_with_identifiers:
+    # Generates a list of regional resources with identifiers
+    # This would typically be used in a Terraform for loop to create more than a single resource, for example
+    # a farm of web servers behind a load balancer
+
+    # Usage: cto ecs config build --path teams/team-b/applications --strategy-name regional_with_identifiers --config-var application backend --config-var environment development
+
+    operations:
+      - for_each:
+          # All the objects in the directory
+          # injects each_key so now output is top level object name, i.e. postgres, ec2 or s3
+          iterator: $app_object_data
+          alias: app_object_data
+          actions:
+            - for_each:
+                # All the objects with regions as top level
+                # injects each_key so now output is postgres.region
+                iterator: $app_object_data#each_value
+                alias: regions
+                actions:
+                  - for_each:
+                      # All the resources
+                      # injects each_key so now output is postgres.region.identifier
+                      iterator: $regions#each_value
+                      alias: resources
+                      actions:
+                        - inject:
+                            - $common_data.$app_object_data#each_key.$regions#each_key # resource-name.region....
+                            - $resources#each_value # resource-name.region.identifier....
+                            - $team_tags_data
+    variable_definitions:
+      common_data:
+        path: ./common
+        type: data
+      app_object_data:
+        path: ./${application}/${environment}
+        type: data
+      team_tags_data:
+        # Relies on team being granted read-only access to their core infra team directory
+        # We only want to specify the standard tags for a team once, then can be updated in one place
+        # if for example, the teams cost center code changed.
+        path: ../../../infra/teams/team-b/team_tags.yaml
+        type: data

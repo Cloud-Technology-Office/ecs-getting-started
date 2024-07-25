@@ -1,0 +1,30 @@
+# Only CloudAdmins are authorized to change this configuration file.
+iam:
+  policy: # Group and Role names are also created based on the policy name.
+    NetworkAdminReadOnly:
+      inline_policy:
+        Statement:
+        - Action:
+          - ec2:Get*
+          - ec2:Describe*
+          Effect: Allow
+          Resource: '*'
+        - Action:
+          - networkmanager:Get*
+          - networkmanager:Describe*
+          Effect: Allow
+          Resource: '*'
+      managed_policy:
+        - arn:aws:iam::aws:policy/AWSNetworkManagerReadOnlyAccess
+        - arn:aws:iam::aws:policy/AWSSupportAccess
+        - arn:aws:iam::aws:policy/ReadOnlyAccess
+    AccountS3ReadOnly:
+      managed_policy:
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      inline_policy:
+        Statement:
+        - Action:
+          - s3:Get*
+          - s3:List*
+          Effect: Allow
+          Resource: '*'

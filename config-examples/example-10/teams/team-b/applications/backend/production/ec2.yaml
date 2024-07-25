@@ -1,0 +1,14 @@
+ec2:
+  us-east-1:
+    web-server-1-production:
+      vpc_name: vpc-production
+      instance_type: c5.2xlarge
+      disk_size: 250
+      tags:
+          env: production
+    web-server-2-production:
+      vpc_name: vpc-production
+      instance_type: c5.2xlarge
+      disk_size: 250
+      tags:
+          env: production

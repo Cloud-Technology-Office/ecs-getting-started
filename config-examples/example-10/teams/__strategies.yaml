@@ -1,0 +1,28 @@
+# In this example, the team that manage ECS are experts in strategy language and provide a way for teams 
+# to generate configuations in a standard way. This saves teams needing to know anything about strategy language
+strategies: 
+  apps:
+    # Generates configurations for a team where they lay out their data in a standard way prescribed by ECS team
+
+    # Usage: cto ecs config build --path teams --strategy-name apps --config-var application database --config-var environment production --config-var team team-a
+    operations:
+      - for_each:
+          iterator: $app_object_data
+          # All the objects in all files in the directory 
+          # Injects each_key so now output is top level object name, i.e. ec2, postgres, s3 etc
+          alias: app_objects # This is not required as not used in the inject as same data is available as $each_key
+          actions:
+            - inject:
+                - $common_data.$each_key # app object.... from common, $each_key is from parent iterator, we could have used $app_objects#each_key but chose $each_key which is same thing
+                - $each_value # app object....
+                - $team_tags_data # team tags sourced from common area managed by infra/ central team
+    variable_definitions:
+      common_data:
+        path: ./${team}/applications/common
+        type: data
+      app_object_data:
+        path: ./${team}/applications/${application}/${environment}
+        type: data
+      team_tags_data:
+        path: ../infra/teams/${team}/team_tags.yaml
+        type: data

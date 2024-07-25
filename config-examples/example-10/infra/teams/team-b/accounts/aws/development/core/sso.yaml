@@ -1,0 +1,6 @@
+sso:
+  permission_sets:
+    - name: DbAdmin
+      principles:
+      - name: db-admin-team-b@cto.com
+        type: USER
