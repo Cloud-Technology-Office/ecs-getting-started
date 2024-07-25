@@ -1,0 +1,119 @@
+strategies: 
+  team_aws_account:
+    # Retrieves config for a single AWS account for a team
+
+    # Usage: cto ecs config build --path infra --strategy-name team_aws_account --config-var team team-a --config-var account development
+
+    operations:
+      - for_each:
+          iterator: $account_object_data
+          # All the objects in the directory 
+          # Injects each_key so now output is top level object name, i.e. account, vpc, iam etc
+          alias: account_objects
+          actions:
+            - inject:
+                - $common_data.$account_objects#each_key # account object-name.... from common
+                - $each_value # account object-name....
+                - $team_tags_data
+
+    variable_definitions:
+      common_data:
+        path: ./common/accounts/aws
+        type: data
+      account_object_data:
+        path: ./teams/${team}/accounts/aws/${account}/core
+        type: data
+      team_tags_data:
+        path: ./teams/${team}/team_tags.yaml
+        type: data
+
+  team_aws_accounts:
+    # Retrieves config for all AWS accounts for a team
+
+    # Usage: cto ecs config build --path infra --strategy-name team_aws_accounts --config-var team team-a
+
+    operations:
+      - for_each:
+          iterator: $team_accounts_data
+          # Injects each_key which is team_name. i.e. team-a
+          alias: team_accounts
+          actions:
+            - for_each:
+                # Injects each_key which is account object name i.e. team-a.account-1
+                iterator: $team_accounts#each_value
+                actions:
+                  - inject:
+                      - $common_data.$each_key
+                      - $each_value
+                      - $team_tags_data
+    variable_definitions:
+      common_data:
+        path: ./common/accounts/aws
+        type: data
+      team_accounts_data:
+        path: ./teams/${team}/accounts/aws/{account}/core
+        type: data_with_key_from_path
+      team_tags_data:
+        path: ./teams/${team}/team_tags.yaml
+        type: data
+
+  account_resources_with_identifiers:
+    # Generates a list of config instances according to the third level key in files in 
+    # resources directories.
+
+    # Usage: cto ecs config build --path infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development
+
+    operations:
+      - for_each:
+          # All the objects in the directory
+          # injects each_key so now output is top level object name, i.e. postgres, ec2 or s3
+          iterator: $resource_object_data
+          alias: resource_objects
+          actions:
+            - for_each:
+                # All the objects with regions as top level
+                # injects each_key so now output is postgres.region
+                iterator: $resource_objects#each_value
+                alias: regions
+                actions:
+                  - for_each:
+                      # All the instances
+                      # injects each_key so now output is postgres.region.identifier
+                      iterator: $regions#each_value
+                      alias: instances
+                      actions:
+                        - inject:
+                            - $common_data.$resource_objects#each_key.$regions#each_key # resource-name.region....
+                            - $instances#each_value # resource-name.region.instance-identifier....
+                            - $team_tags_data
+    variable_definitions:
+      common_data:
+        path: ./common/resources
+        type: data
+      resource_object_data:
+        path: ./teams/${team}/accounts/aws/${account}/resources
+        type: data
+      team_tags_data:
+        path: ./teams/${team}/team_tags.yaml
+        type: data
+
+
+  emit_file_data:
+    # Emit the contents of a file passed in such as teams/team-a/tenant.yaml or repositories.yaml
+    # No merging performed, it just emits the config file.
+
+    # cto ecs config build --path infra --strategy-name emit_file_data --config-var file management/sso/permission_sets.yaml
+
+    # This can also be acomplished without a strategy. i.e.
+
+    # cto ecs config build --path infra/management/sso/permission_sets.yaml
+
+    operations:
+      - inject:
+          - $data
+
+    variable_definitions:
+      data:
+        path: ${file}
+        type: data
+

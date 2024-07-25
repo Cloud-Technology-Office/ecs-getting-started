@@ -1,0 +1,4 @@
+s3:
+   us-east-1:
+      my-bucket-3:
+         private: false

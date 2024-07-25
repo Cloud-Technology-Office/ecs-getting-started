@@ -1,0 +1,10 @@
+sso:
+  permission_sets:
+    - name: AdministratorAccess
+      principles:
+      - name: CloudTeam
+        type: GROUP
+    - name: SystemsAdministrator
+      principles:
+      - name: InfrastructureTeam
+        type: GROUP

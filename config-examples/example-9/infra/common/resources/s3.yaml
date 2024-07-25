@@ -1,0 +1,10 @@
+s3:
+  us-east-1:
+    encryption: true
+    private: true
+    versioning: true
+  us-east-2:
+    encryption: true
+    private: true
+    versioning: true
+      

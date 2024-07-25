@@ -1,0 +1,7 @@
+vpc:
+  us-east-1:
+    ipv4_ipam_pool_id: ipam-pool-us-east-1
+    transit_gateway_id: tgw-us-east-1
+  us-east-2:
+    ipv4_ipam_pool_id: ipam-pool-us-east-2
+    transit_gateway_id: tgw-us-east-2

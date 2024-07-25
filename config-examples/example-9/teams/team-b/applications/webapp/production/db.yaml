@@ -1,0 +1,25 @@
+postgresql:
+    us-east-1:
+        webapp-db-dev:
+            password_ecs_secret: ENC[AES256_GCM,data:RRyE9i1giHbqQDkYQvByByx7OlAF3F3uSmw52FSpnGISW58gkhUZdSLkJjHoEGUO5/0FBnMJecZUKV5W1d7PXRT2BNTFYkBeD3m511rLbylzqjPFrEkRk967WpA990BADthyfyJVLeinOmwUH6dtTHPEaUaAsaavFWMmUftaIQHf0R8=,iv:3+yoxY/+NGmyrd5UmoASnYG2dLSFfNvsY5+DYssj1v4=,tag:djM22GWBTm9vje2CLyPuqA==,type:str]
+            security_groups:
+                - sg-123456789
+            tags:
+                env: production
+            vpc: vpc-production
+sops:
+    kms:
+        - arn: arn:aws:kms:eu-west-1:381492036330:key/4117ed92-7e8b-4e8b-93bc-be10c7a52b53
+          created_at: "2024-07-25T15:00:51Z"
+          enc: AQICAHhC6XDNIzVYBtdp9BrxN6avLtfKYXG+tfb9uUEut3tYGAFTwAk6jln9wvAGLZNmJxQUAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM3z2hCx9GnGNz44CQAgEQgDs9pe4NVHU/jgliIOt5BO/f7xwFRGgh2j5SNaW+PuqsKA8KyAJVAoHgvYnb7YaZf4ZXdSE4cX5BDKJrPw==
+          aws_profile: ""
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2024-07-25T15:00:51Z"
+    mac: ENC[AES256_GCM,data:2rt5TZgw36ZREawGlR6RGm62TL5SBSz6piojTR6tYNmKE/2ZEaL8pgKdSuZQKUng5UWo5OYJKM6Hw4EQhhaaJYePuGKj14v87iZ2h7xjFaS6sfwyS0xNs4PLpxLZ5O9/JKOK6qf77H9gQBCs5xZg3kg/IsT8Z01HzhZNFTEi4K4=,iv:CdlyifdvHR1qBLtJFAkPs3i73ZXmm1oo6D2MRes0mdI=,tag:r4ZK5xkntch3APrnKkfMDw==,type:str]
+    pgp: []
+    encrypted_suffix: _ecs_secret
+    mac_only_encrypted: true
+    version: 3.9.0
