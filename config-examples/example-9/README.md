@@ -4,7 +4,7 @@
 
 Example-9 is a config that can be used to manage core infrastructure in an AWS environment plus team specific configuations. The example is intended to be completely DRY (Don't Repeat Yourself). 
 
-The directory and file structure is depicted below:
+The directory and file structure for the core infra under `/infra` is depicted below:
 
 ![Example 9 Infra Core Directory Structure](example-9-infra-core-structure.png)
 
