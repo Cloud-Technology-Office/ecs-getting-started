@@ -321,4 +321,6 @@ In this example, there are 2 user personas:
 
   - Non core infra team, i.e. application teams, devops, SRE etc
 
-    Team-a has access to everything in `/teams/team-a` directory, and also has read-only access to the `/infra/teams/team-a` directory so they can read the teams centrally managed tags. Team-b has access to their respective team area. 
+    Team-a has access to everything in `/teams/team-a` directory, and also has read-only access to the `/infra/teams/team-a` directory so they can read the teams centrally managed tags. Team-b has access to their respective team area.
+
+There is of course the overall ECS admin user(s) who is responsible for setting up access to the individual users and teams. Only ECS admins would be given admin rights, all other users are granted a user role and access to specific paths in the config, either read-only or read/write. 
