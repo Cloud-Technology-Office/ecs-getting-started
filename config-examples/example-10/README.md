@@ -1,12 +1,12 @@
-# Example 9 Documentation
+# Example 10 Documentation
 
 ## Overview
 
-Example-9 is a config that can be used to manage core infrastructure in an AWS environment plus team specific configuations. The example is intended to be completely DRY (Don't Repeat Yourself). 
+example-10 is a config that can be used to manage core infrastructure in an AWS environment plus team specific configuations. The example is intended to be completely DRY (Don't Repeat Yourself). 
 
 The directory and file structure for the core infra under `/infra` is depicted below:
 
-![Example 9 Infra Core Directory Structure](example-9-infra-core-structure.png)
+![Example 9 Infra Core Directory Structure](example-10-infra-core-structure.png)
 
 
 There is a `common` area where configuration standard values are stored. 
@@ -25,7 +25,7 @@ Pipelines that would typically be created for this config include:
 
   This would create and update team non AWS account specific resources such as a teams Git and, Artifactory repositories. An an example, config for a teams Git repositories woulkd be emitted to the pipeline using the command: 
 
-  `cto ecs config build --path config-examples/example-9/infra/teams/team-a/repositories.yaml`
+  `cto ecs config build --path config-examples/example-10/infra/teams/team-a/repositories.yaml`
 
   The output is simply the contents of the file. 
 
@@ -33,7 +33,7 @@ Pipelines that would typically be created for this config include:
 
   This would create the permission sets in the AWS master account, the permission sets are then referenced and enabled in specific accounts via the accounts pipeline. Config for this pipeline would be emitted using the command:
 
-  `cto ecs config build --path config-examples/example-9/infra/management/sso/permission_sets.yaml`
+  `cto ecs config build --path config-examples/example-10/infra/management/sso/permission_sets.yaml`
 
   As with the repositories example, the output is the contents of the specified file. 
 
@@ -41,7 +41,7 @@ Pipelines that would typically be created for this config include:
 
   This would create and update AWS accounts and set up their core attributes, such as SSO settings, VPCs, SCPs, certificates, IAM, anything that is considered core to the AWS accounts configuration. As an example, updating config in `sso.yaml` for an account would trigger the pipeline and update the account that has been changed. Config for this pipeline would be emitted using command:
 
-  `cto ecs config build --path config-examples/example-9/infra --strategy-name team_aws_account --config-var team team-a --config-var account development`
+  `cto ecs config build --path config-examples/example-10/infra --strategy-name team_aws_account --config-var team team-a --config-var account development`
 
   The output is the entire config for the specified account, with common used as a source for the majority of the data.
 
@@ -96,11 +96,11 @@ Pipelines that would typically be created for this config include:
 
   The resources could be managed in one pipeline but it would be typical to split distinct resources into their own pipelines. If using one pipeline for all resources, config would be emitted using command:
 
-  `cto ecs config build --path config-examples/example-9/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development`
+  `cto ecs config build --path config-examples/example-10/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development`
 
   Where individual pipelines are used for each resource type, whilst the whole resources config is built, using ECS filtering it is possible to emit just the specific resources. Examples are:
 
-  `cto ecs config build --path config-examples/example-9/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 'postgres`
+  `cto ecs config build --path config-examples/example-10/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 'postgres`
 
   The output is as follows:
 
@@ -138,7 +138,7 @@ us-east-2:
 
 or to get S3 config:
 
-  `cto ecs config build --path config-examples/example-9/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 's3`
+  `cto ecs config build --path config-examples/example-10/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 's3`
 
 
 ### Team Specific Config Areas
@@ -147,13 +147,13 @@ Under the `/teams` directory, we have 2 teams, team-a and team-b. There is a str
 
 The `/teams` directory and file structure is depicted below:
 
-![Example 9 Teams Directory Structure](example-9-teams-structure.png)
+![Example 9 Teams Directory Structure](example-10-teams-structure.png)
 
 #### Team-a config
 
 Team-a are taking advantage of the provided strategy to have a DRY config for their development and production databases. They also have a frontend application, the frontend team wanted to use Pkl as a config language, the 2 coexist in the team's config area. To build the database config, they use the following command:
 
-`cto ecs config build --path config-examples/example-9/teams --strategy-name apps --config-var application database --config-var environment production --config-var team team-a`
+`cto ecs config build --path config-examples/example-10/teams --strategy-name apps --config-var application database --config-var environment production --config-var team team-a`
 
 This provides output as follows:
 
@@ -187,7 +187,7 @@ This provides output as follows:
 
 To build the frontend config they use:
 
-`cto ecs config build --path config-examples/example-9/teams/team-a/applications/k8s_cluster/k8s-frontend.pkl`
+`cto ecs config build --path config-examples/example-10/teams/team-a/applications/k8s_cluster/k8s-frontend.pkl`
 
 The output is as follows:
 
