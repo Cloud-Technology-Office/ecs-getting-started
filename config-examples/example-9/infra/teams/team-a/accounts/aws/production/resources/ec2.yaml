@@ -1,5 +1,0 @@
-ec2:
-  us-east-1:
-    test-instance-a-2: {}
-  us-east-2: {}
-

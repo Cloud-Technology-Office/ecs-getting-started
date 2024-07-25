@@ -1,4 +1,0 @@
-postgres:
-  us-east-1:
-    dev-db1:
-      db_name: devdb

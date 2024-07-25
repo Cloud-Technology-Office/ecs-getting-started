@@ -1,6 +1,0 @@
-sso:
-  permission_sets:
-    - name: S3ReadOnly
-      principles:
-      - name: user1@cto.com
-        type: USER

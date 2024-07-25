@@ -1,5 +1,0 @@
-users:
-  svc_terraform:
-    name: Terraform Service User
-    email: svc_terraform@cto.com
-    groups: []

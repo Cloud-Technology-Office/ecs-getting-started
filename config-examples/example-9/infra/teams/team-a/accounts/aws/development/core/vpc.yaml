@@ -1,4 +1,0 @@
-vpc:
-  us-east-1:
-    ipv4_ipam_pool_id: ipam-pool-a-1
-    transit_gateway_id: tgw-a-1

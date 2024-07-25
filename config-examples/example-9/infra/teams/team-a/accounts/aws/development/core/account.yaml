@@ -1,8 +1,0 @@
-account:
-  account_details:
-    account_email: team-a-development@cto.com
-    account_name: Team A - Development
-
-  enabled_modules:
-    vpc:
-      us-east-1: true

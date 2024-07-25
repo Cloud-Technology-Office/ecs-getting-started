@@ -1,4 +1,0 @@
-ec2:
-  us-east-1:
-    test-instance:
-      instance_profile: team-a-profile

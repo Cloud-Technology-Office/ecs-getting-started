@@ -1,6 +1,0 @@
-account:
-  account_details:
-    account_email: team-a-production@cto.com
-    account_name: Team A - Peoduction
-    organization_unit: production
-    environment: production
