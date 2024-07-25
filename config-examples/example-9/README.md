@@ -8,7 +8,6 @@ The directory and file structure for the core infra under `/infra` is depicted b
 
 ![Example 9 Infra Core Directory Structure](example-9-infra-core-structure.png)
 
-The structure has root for all core infrastructure config, this is in directory `/infra`. 
 
 There is a `common` area where configuration standard values are stored. 
 
