@@ -15,7 +15,7 @@ The `teams` area is where team specific settings are stored. These include some 
 
 The common values are the basis for team specific values, and team specific are merged over the top of common. Tags that should be applied to any resources applied by pipeline, such as cost_center. This makes it easy to change a cost center and have it update all affected resources by virtue of their pipelines that are triggered via ECS webhooks. 
 
-## Pipelines
+## Pipelines
 
 The configurations are intended to be read by pipelines, potentially with Terraform iterating over config to syncronize state with configuration. 
 
