@@ -100,50 +100,50 @@ Pipelines that would typically be created for this config include:
 
   Where individual pipelines are used for each resource type, whilst the whole resources config is built, using ECS filtering it is possible to emit just the specific resources. Examples are:
 
-  `cto ecs config build --path config-examples/example-10/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 'postgres`
+  `cto ecs config build --path config-examples/example-10/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 'postgres' --format yaml`
 
   The output is as follows:
 
   ```yaml
   us-east-1:  
-  db-instance-team-a-account-1:
-    backup_retention_period: 7
-    engine_version: '15.3'    
-    instance_class: db.t3.medium
-    iops: null          
-    max_allocated_storage: 500
-    monitoring_interval: 60   
-    storage_encrypted: true   
-    storagesize: 100    
-    storagetype: gp3    
-    tags:       cost_center: team-a     
-      name: Postgres RDS
-    username: administrator   
-us-east-2:
-  db-instance-team-a-account-1-east-2:
-    backup_retention_period: 7
-    engine_version: '15.3'    
-    instance_class: db.t3.medium
-    iops: null          
-    max_allocated_storage: 500
-    monitoring_interval: 60   
-    storage_encrypted: true   
-    storagesize: 100    
-    storagetype: gp3    
-    tags:       
-      cost_center: team-a     
-      name: Postgres RDS
-    username: administrator  
+    db-instance-team-a-account-1:
+      backup_retention_period: 7
+      engine_version: 15.3   
+      instance_class: db.t3.medium
+      iops: null          
+      max_allocated_storage: 500
+      monitoring_interval: 60   
+      storage_encrypted: true   
+      storagesize: 100    
+      storagetype: gp3    
+      tags:       cost_center: team-a     
+        name: Postgres RDS
+      username: administrator   
+  us-east-2:
+    db-instance-team-a-account-1-east-2:
+      backup_retention_period: 7
+      engine_version: 15.3  
+      instance_class: db.t3.medium
+      iops: null          
+      max_allocated_storage: 500
+      monitoring_interval: 60   
+      storage_encrypted: true   
+      storagesize: 100    
+      storagetype: gp3    
+      tags:       
+        cost_center: team-a     
+        name: Postgres RDS
+      username: administrator  
 ```
 
 or to get S3 config:
 
-  `cto ecs config build --path config-examples/example-10/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 's3`
+  `cto ecs config build --path config-examples/example-10/infra --strategy-name account_resources_with_identifiers --config-var team team-a --config-var account development --filter 's3' --format yaml`
 
 
 ### Team Specific Config Areas
 
-Under the `/teams` directory, we have 2 teams, team-a and team-b. There is a strategy file provided by the ECS team that lives in the `/teams` directory, all teams can take advantage of this strategy for basic merging of configurations by passing in their team name as a variable. As they only have access to their individual team's config area, passing another team's name as a variable will not give them access to the other team's data. 
+Under the `/teams` directory (note, this is distinct from the `/infra/teams` directory), we have 2 teams, team-a and team-b. There is a strategy file provided by the ECS team that lives in the `/teams` directory, all teams can take advantage of this strategy for basic merging of configurations by passing in their team name as a variable. As they only have access to their individual team's config area, passing another team's name as a variable will not give them access to the other team's data. 
 
 The `/teams` directory and file structure is depicted below:
 
@@ -153,11 +153,11 @@ The `/teams` directory and file structure is depicted below:
 
 Team-a are taking advantage of the provided strategy to have a DRY config for their development and production databases. They also have a frontend application, the frontend team wanted to use Pkl as a config language, the 2 coexist in the team's config area. To build the database config, they use the following command:
 
-`cto ecs config build --path config-examples/example-10/teams --strategy-name apps --config-var application database --config-var environment production --config-var team team-a`
+`cto ecs config build --path config-examples/example-10/teams --strategy-name apps --config-var application database --config-var environment production --config-var team team-a --format json`
 
 This provides output as follows:
 
-```yaml
+```json
 {
   "postgresql": {
     "tags": {
@@ -243,69 +243,54 @@ Team-b wanted to use YAML and to do a more sophisticated merge, so they created 
 
 The premise behind this strategy is that they require a list of resources with identifiers split by region as they team have resources in multiple regions. To build the config they use command:
 
-`cto ecs config build --path teams/team-b/applications --strategy-name regional_with_identifiers --config-var application backend --config-var environment development`
+`cto ecs config build --path config-examples/example-10/teams/team-b/applications --strategy-name regional_with_identifiers --config-var application backend --config-var environment development --format yaml`
 
  The strategy provides the following output:
 
  ```yaml
- {
-  "postgresql": {
-    "us-east-1": {
-      "webapp-db-dev": {
-        "tags": {
-          "name": "Postgres RDS",
-          "env": "development",
-          "cost_center": "team-b"
-        },
-        "instance_class": "db.r6g.small",
-        "engine_version": 15.3,
-        "username": "admin",
-        "storagetype": "io1",
-        "iops": 13000,
-        "storagesize": 200,
-        "max_allocated_storage": 2000,
-        "storage_encrypted": true,
-        "backup_retention_period": 7,
-        "monitoring_interval": 60,
-        "password": "ENC[AES256_GCM,data:zSUyyYbwbx8DVolmJoD4Tht6sqOne+n47Sn2GyvbLLi9wycibksRZNq/H4geiAhBQztg/CElcL5gAkgfdfykl0yJLFVKLreGEF35bEG0vNrBSOiTgPdZT7mJer/beMh0O4ndqe3LDnIxSu6W5UsEBV6C8Ck/xx6vaq/MpQQuRHryOjg=,iv:lfWQTBaJBRcEMzAn76SKARMxWUN5ulTdpDHOCctXqYo=,tag:2tibmFXVtR4zj+6F9rRVfA==,type:str]",
-        "security_groups": [
-          "sg-123456789"
-        ],
-        "vpc": "vpc-development"
-      }
-    }
-  },
-  "ec2": {
-    "us-east-1": {
-      "web-server-1-development": {
-        "ami": "ami-12345678901-east-1",
-        "instance_profile": null,
-        "instance_profile_policies": [
-          "AmazonSSMManagedInstanceCore",
-          "AmazonS3FullAccess"
-        ],
-        "vpc_name": "vpc-development",
-        "tags": {
-          "env": "development",
-          "cost_center": "team-b"
-        }
-      },
-      "web-server-2-development": {
-        "ami": "ami-12345678901-east-1",
-        "instance_profile": null,
-        "instance_profile_policies": [
-          "AmazonSSMManagedInstanceCore",
-          "AmazonS3FullAccess"
-        ],
-        "vpc_name": "vpc-development",
-        "tags": {
-          "env": "development",
-          "cost_center": "team-b"
-        }
-      }
-    }
-  }
-}
+ ec2:  
+  us-east-1:
+    web-server-1-development:
+      ami: ami-12345678901-east-1
+      instance_profile: null 
+      instance_profile_policies: 
+        - AmazonSSMManagedInstanceCore
+        - AmazonS3FullAccess   
+      tags: 
+        cost_center: team-b  
+        env: development     
+      vpc_name: vpc-development  
+    web-server-2-development:
+      ami: ami-12345678901-east-1
+      instance_profile: null 
+      instance_profile_policies: 
+        - AmazonSSMManagedInstanceCore
+        - AmazonS3FullAccess   
+      tags: 
+        cost_center: team-b  
+        env: development     
+      vpc_name: vpc-development  
+postgresql: 
+  us-east-1:
+    webapp-db-dev:           
+      backup_retention_period: 7 
+      engine_version: 15.3   
+      instance_class: db.r6g.small  
+      iops: 13000            
+      max_allocated_storage: 2000
+      monitoring_interval: 60
+      password: ENC[AES256_GCM,data:zSUyyYbwbx8DVolmJoD4Tht6sqOne+n47Sn2GyvbLLi9wycibksRZNq/H4geiAhBQztg/CElcL
+      security_groups:       
+      - sg-123456789         
+      storage_encrypted: true
+      storagesize: 200       
+      storagetype: io1       
+      tags: 
+        cost_center: team-b  
+        env: development     
+        name: Postgres RDS   
+      username: admin        
+      vpc: vpc-development 
 ```
 
 It can be seen that the password for the DB is encrpyted, it would be decrypted in the pipeline by adding `--show-secrets` to the `cto ecs config build` command. If they have permission, the secret will be decrpyted.
@@ -321,6 +306,6 @@ In this example, there are 2 user personas:
 
   - Non core infra team, i.e. application teams, devops, SRE etc
 
-    Team-a has access to everything in `/teams/team-a` directory, and also has read-only access to the `/infra/teams/team-a` directory so they can read the teams centrally managed tags. Team-b has access to their respective team area.
+    Team-a has access to everything in `/teams/team-a` directory, and also has read-only access to the `/infra/teams/team-a` directory so they can read the teams centrally managed tags. Team-b has access to their respective team area and the tags area under `/infra`.
 
 There is of course the overall ECS admin user(s) who is responsible for setting up access to the individual users and teams. Only ECS admins would be given admin rights, all other users are granted a user role and access to specific paths in the config, either read-only or read/write. 
