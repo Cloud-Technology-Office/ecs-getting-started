@@ -6,7 +6,7 @@ example-10 is a config that can be used to manage core infrastructure in an AWS 
 
 The directory and file structure for the core infra under `/infra` is depicted below:
 
-![Example 9 Infra Core Directory Structure](example-10-infra-core-structure.png)
+![Example 10 Infra Core Directory Structure](example-10-infra-core-structure.png)
 
 
 There is a `common` area where configuration standard values are stored. 
@@ -147,7 +147,7 @@ Under the `/teams` directory (note, this is distinct from the `/infra/teams` dir
 
 The `/teams` directory and file structure is depicted below:
 
-![Example 9 Teams Directory Structure](example-10-teams-structure.png)
+![Example 10 Teams Directory Structure](example-10-teams-structure.png)
 
 #### Team-a config
 
