@@ -237,6 +237,12 @@ spec:
       tier: frontend
 ```
 
+As this output is a multi file Kubernetes manifest, the output can be piped to kubectl to deploy the application directly as per the following:
+
+`cto ecs config build --path "config-examples/example-10/teams/team-a/applications/k8s_cluster/k8s-frontend.pkl" | kubectl apply -f -`
+
+
+
 #### Team-b
 
 Team-b wanted to use YAML and to do a more sophisticated merge, so they created their own strategy file. The ECS team could have written it for them and placed it in the `/teams` directory strategy file, therefore making it useful for other teams, but in this case, they wrote it themselves and stored it in their own `applications` directory. 
